@@ -19,14 +19,23 @@ from django.contrib import admin
 from django.urls import path
 from djangoProject.views import home
 from djangoProject.views import settings
+from djangoProject.views import road_work
+from djangoProject.views import traffic
+from djangoProject.views import weather
+
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home, name='home'),
+    path('', home, name='home.html'),
     path('settings/', settings, name='settings'),
     path('road_work', road_work, name='road_work'),
     path('traffic', traffic, name='traffic'),
     path('weather', weather, name='weather'),
-    path('traffic', traffic, name='traffic')
+    path('traffic', traffic, name='traffic'),
+
+
+
 ]
 
