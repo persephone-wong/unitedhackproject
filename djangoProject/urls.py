@@ -18,8 +18,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from .views import home
+from .views import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('settings/', settings, name='settings'),
+    path('road_work', road_work, name='road_work'),
+    path('traffic', traffic, name='traffic'),
+    path('weather', weather, name='weather'),
+    path('traffic', traffic, name='traffic')
 ]
+
