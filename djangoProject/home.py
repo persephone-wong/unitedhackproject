@@ -6,7 +6,6 @@ from datetime import datetime
 
 
 def home(request):
-
     WEATHER_CODE_MAP = {
         0: 'Clear sky',
         1: 'Mainly clear',
@@ -116,11 +115,19 @@ def home(request):
     if weather_code in [99, 65, 67]:
         rain_delay = 15
 
+    # Time based greetings
+    if 5 < time_obj.hour < 12:
+        greetings = 'Good Morning!'
+    elif 12 <= time_obj.hour < 18:
+        greetings = 'Good Afternoon!'
+    else:
+        greetings = 'Good Evening!'
+
     context = {
-        'greetings': 'Welcome!',
+        'greetings': greetings,
         # 'time': weather_data['current_weather']['time'],
         'time': formatted_time,
-        'date': '2023-10-01',
+        # 'date': '2023-10-01',
         'location': weather_data['timezone'] if weather_data else 'Unknown',
         'weather': WEATHER_CODE_MAP.get(weather_data['current_weather']['weathercode']) if weather_data else 'N/A',
         'temperature': weather_data['current_weather']['temperature'] if weather_data else 'N/A',
