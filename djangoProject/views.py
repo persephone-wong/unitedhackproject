@@ -76,13 +76,19 @@ def home(request):
     response = requests.get(url)
     weather_data = response.json()
     print(weather_data)
-    
+
     if response.status_code == 200:
         weather_data = response.json()
-        current_weather = weather_data.get('current_weather', {})  # Ensure current_weather is safely accessed
+        current_weather = weather_data.get('current_weather', {})  
     else:
         current_weather = {}
 
+    weather_code = current_weather.get('weathercode', None)
+
+    # display message if snow or freezing rain in forecast
+    snow_message = None
+    if weather_code in [56, 57, 66, 67, 71, 73, 75, 85, 86]:
+        snow_message = "Better have winter tires!"
 
     context = {
         'greetings': 'Welcome!',
@@ -92,6 +98,7 @@ def home(request):
         'weather': WEATHER_CODE_MAP.get(weather_data['current_weather']['weathercode']) if weather_data else 'N/A',
         'temperature': weather_data['current_weather']['temperature'] if weather_data else 'N/A',
         'emoji': WEATHER_EMOJI_MAP.get(current_weather.get('weathercode', '🌡️')),
+        'snow_message': snow_message, 
         'work_estimate': '2 hours',
         'playlist': 'Top Hits'
     }

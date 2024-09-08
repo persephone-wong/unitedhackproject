@@ -14,8 +14,11 @@
   <h2>{{ time }}</h2>
   <h2>{{ date }}</h2>
   <h2>{{ location }}</h2>
-  <h2>{{ weather }} {{ emoji }}</h2>
+  <h2>{{ emoji }}</h2>
   <h2>{{ weather }}</h2>
+  {% if snow_message %}
+  <h2 style="color: red; background-color: black;">{{ snow_message }}</h2> <!-- Display snow message with styling -->
+  {% endif %}
   <h2>{{ temperature }}°C</h2>
   <h2>{{ work_estimate }}</h2>
   <h2>{{ playlist }}</h2>
