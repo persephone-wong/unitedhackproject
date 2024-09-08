@@ -201,7 +201,9 @@ def home(request):
         'road_work': road_work_count,
         'weather_category': weather_category,
         'background_gif': f"{weather_category}.gif",
-        'driving_gif': f"{time_of_day}.gif"
+        'driving_gif': f"{time_of_day}.gif",
+        'body_gif': f"{time_of_day}big.gif"
+
     }
 
     token_info = request.session.get('token_info')

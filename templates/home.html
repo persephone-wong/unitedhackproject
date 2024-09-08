@@ -18,6 +18,15 @@
       border-radius: 8px;
       transition: transform 0.3s, box-shadow 0.3s;
     }
+    .body {
+        background-image: url("{% static 'images/' %}{{ body_gif }}");
+        background-size: cover;
+        background-position: center;
+        
+
+        
+        
+    }
 
     .trip-section {
       background-image: url("{% static 'images/' %}{{ driving_gif }}");
@@ -40,7 +49,7 @@
   </style>
 </head>
 
-<body class="container mt-4 text-center">
+<body class="body container mt-4 text-center">
   <h1 class="display-4 mb-4" style="font-size: 45px">{{ greetings }}</h1>
 
   <!-- weather sect -->
@@ -69,7 +78,7 @@
 
 <div class="card mx-auto text-white trip-section card-hover mb-4" style="width: 18rem">
   <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
-      <h2 class="card-title">Trip</h2>
+      <h2 class="card-title">Next Trip</h2>
       <h1 class="card-title">15 mins</h1>
       <h6 class="card-title">Road Work Nearby: {{ road_work }}</h6>
   </div>
@@ -80,7 +89,7 @@
   <div class="spotify card mx-auto mb-4 card-hover" style="width: 18rem; background-color: #1DB954; color: white;">
     <div class="card-body text-success">
       {% if needs_spotify_sign_in %}
-      <h2>Sign in to Spotify</h2>
+      <h1>Spotify</h1>
       <a href="{% url 'spotify' %}" class="btn btn-dark">Sign in with Spotify</a>
       {% else %}
       {% include 'spotify.html' %}
