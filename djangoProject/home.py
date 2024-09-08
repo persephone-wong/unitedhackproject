@@ -155,7 +155,7 @@ def home(request):
         formatted_time = 'N/A'
         formatted_date = 'N/A'
 
-    if 12 < raw_time.hour >= 5:
+    if 12 < raw_time.hour >= 4:
         time_of_day = "day"
     elif 18 < raw_time.hour >= 12:
         time_of_day = "noon"
