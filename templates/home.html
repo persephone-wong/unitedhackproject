@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-</head>
-<body>
-    <h1>{{ greetings }}</h1>
 
-    <h2>{{ time }}</h2>
-    <h2>{{ date }}</h2>
-    <h2>{{ location }}</h2>
-    <h2>{{ weather }}</h2>
-    <h2>{{ temperature }}°C</h2>
-    <h2>{{ work_estimate }}</h2>
-    <h2>{{ playlist }}</h2>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page</title>
+</head>
+
+<body>
+  <h1>{{ greetings }}</h1>
+
+  <h2>{{ time }}</h2>
+  <h2>{{ date }}</h2>
+  <h2>{{ location }}</h2>
+  <h2>{{ weather }} {{ emoji }}</h2>
+  <h2>{{ weather }}</h2>
+  <h2>{{ temperature }}°C</h2>
+  <h2>{{ work_estimate }}</h2>
+  <h2>{{ playlist }}</h2>
 
 
 </body>
-  <script src="{% static 'js/getlocation.js' %}"></script>
+<script src="{% static 'js/getlocation.js' %}"></script>
+
 </html>
