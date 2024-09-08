@@ -17,7 +17,13 @@
   <h2>{{ emoji }}</h2>
   <h2>{{ weather }}</h2>
   {% if snow_message %}
-  <h2 style="color: red; background-color: black;">{{ snow_message }}</h2> <!-- Display snow message with styling -->
+  <h2 style="color: red; background-color: black;">{{ snow_message }}</h2>
+  {% endif %}
+  {% if snow_delay %}
+  <h2>+%{{ snow_delay }} due to snow</h2>
+  {% endif %}
+  {% if rain_delay %}
+  <h2>+%{{ rain_delay }} due to heavy rain</h2>
   {% endif %}
   <h2>{{ temperature }}°C</h2>
   <h2>{{ work_estimate }}</h2>
