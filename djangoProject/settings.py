@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-0au&jso!f+)1$o$b!3145&fseo4r_cag2im%o0w8@+5o#*2pg%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['bipxel.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
