@@ -10,6 +10,9 @@ from djangoProject.home import home
 def settings(request):
     return render(request, 'settings.html')
 
+def clear_session_view(request):
+    request.session.flush()
+    return redirect('home')
 
 def traffic(request):
     return render(request, 'traffic.html')
