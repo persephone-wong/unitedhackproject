@@ -11,7 +11,10 @@ import pytz
 
 
 def get_spotify_playlists(token_info):
-    sp = Spotify(auth=token_info['access_token'])
+    try:
+        sp = Spotify(auth=token_info['access_token'])
+    except Exception as e:
+        raise Exception("Failed to authenticate with Spotify")
     playlists = sp.current_user_playlists()
     return playlists['items']
 
@@ -140,9 +143,6 @@ def home(request):
     else:
         print("not working")
 
-
-
-
     # Format the time
     timezone = pytz.timezone(weather_data.get('timezone'))
     raw_time = datetime.now(timezone)
@@ -195,7 +195,11 @@ def home(request):
     if not token_info:
         context['needs_spotify_sign_in'] = True
     else:
-        playlists = get_spotify_playlists(token_info)
-        context['playlists'] = playlists
+        try:
+            playlists = get_spotify_playlists(token_info)
+            context['playlists'] = playlists
+        except Exception as e:
+            context['needs_spotify_sign_in'] = True
+
 
     return render(request, 'home.html', context)

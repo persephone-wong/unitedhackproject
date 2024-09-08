@@ -15,12 +15,17 @@ def spotify_callback(request):
 
 
 def spotify_playlist(request):
+
     token_info = request.session.get('token_info', None)
     print(token_info)
     if not token_info:
         return redirect('spotify_auth')
-    sp = Spotify(auth=token_info['access_token'])
-    playlists = sp.current_user_playlists()
+    try:
+        sp = Spotify(auth=token_info['access_token'])
+        playlists = sp.current_user_playlists()
+    except Exception as e:
+        return redirect('spotify_auth')
+
     context = {
         'playlists': playlists['items']
     }
