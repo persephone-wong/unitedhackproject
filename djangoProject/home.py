@@ -18,15 +18,6 @@ def get_spotify_playlists(token_info):
     playlists = sp.current_user_playlists()
     return playlists['items']
 
-def get_greetings():
-    now = datetime.now()
-    hour = now.hour
-    if hour < 12:
-        return "Good Morning!"
-    elif hour < 18:
-        return "Good Afternoon!"
-    else:
-        return "Good Evening!"
 
 
 def get_weather_category(weather_code):
@@ -154,6 +145,15 @@ def home(request):
         formatted_time = 'N/A'
         formatted_date = 'N/A'
 
+    if 12 < raw_time.hour >= 6:
+        time_of_day = "day"
+    elif 18 < raw_time.hour >= 12:
+        time_of_day = "noon"
+    elif 22 < raw_time.hour >= 18:
+        time_of_day = "evening"
+    else:
+        time_of_day = "night"
+
     # display message if snow or freezing rain in forecast
     snow_message = None
     # display the delay as %
@@ -173,6 +173,8 @@ def home(request):
     location = weather_data.get('timezone', 'Unknown').split('/')[-1]
     weather_category = get_weather_category(weather_code)
 
+
+
     context = {
         'greetings': get_greetings(),
         # 'time': weather_data['current_weather']['time'],
@@ -188,7 +190,8 @@ def home(request):
         'work_estimate': '2 hours',
         'road_work': road_work_count,
         'weather_category': weather_category,
-        'background_gif': f"{weather_category}.gif"
+        'background_gif': f"{weather_category}.gif",
+        'driving_gif': f"{time_of_day}.gif"
     }
 
     token_info = request.session.get('token_info')
