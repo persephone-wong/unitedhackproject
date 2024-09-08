@@ -21,7 +21,7 @@ def get_spotify_playlists(token_info):
 def get_greetings():
     now = datetime.now()
     hour = now.hour
-    if 6 < hour < 12:
+    if 4 < hour < 12:
         return "Good Morning!"
     elif 12 < hour < 18:
         return "Good Afternoon!"
@@ -155,16 +155,16 @@ def home(request):
         formatted_time = 'N/A'
         formatted_date = 'N/A'
 
-    if 12 < raw_time.hour >= 6:
-        time_of_day = "day"
+    if 4 <= raw_time.hour < 12:
+        time_of_day = "morning"
     elif 18 < raw_time.hour >= 12:
         time_of_day = "noon"
-    elif 22 < raw_time.hour >= 18:
+    elif 22 < raw_time.hour >= 17:
         time_of_day = "evening"
     else:
         time_of_day = "night"
-
     driving_time = 18
+    print(time_of_day)
     # display message if snow or freezing rain in forecast
     snow_message = None
     # display the delay as %
@@ -208,7 +208,7 @@ def home(request):
         'driving_gif': f"{time_of_day}.gif",
         'body_gif': f"{time_of_day}big.gif",
         'total_delay': total_delay,
-        'total_delay': total_delay,
+
 
     }
 

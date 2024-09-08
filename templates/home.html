@@ -22,10 +22,13 @@
         background-image: url("{% static 'images/' %}{{ body_gif }}");
         background-size: cover;
         background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh; /* Full viewport height */
+        width: 100vw;  /* Full viewport width */
+        margin: 0;
 
 
-        
-        
+
     }
 
     .trip-section {
@@ -50,7 +53,7 @@
 </head>
 
 <body class="body container mt-4 text-center">
-  <h1 class="display-4 mb-4" style="font-size: 45px">{{ greetings }}</h1>
+  <h1 class="text-white display-4 mb-4" style="font-size: 45px">{{ greetings }}</h1>
 
   <!-- weather sect -->
   <div class="card mx-auto mb-4 weather-section card-hover" style="width: 18rem;">
@@ -100,7 +103,7 @@
 
   <a href="{% url 'add_trip' %}" class="btn btn-dark">Add trip</a>
 
-  <footer class="footer ">
+  <footer class="footer text-white mt-4">
     <div>
       <p>&copy; 2024 - All rights reserved</p>
     </div>
