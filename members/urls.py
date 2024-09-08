@@ -22,6 +22,10 @@ from djangoProject.views import settings
 from djangoProject.views import road_work
 from djangoProject.views import traffic
 from djangoProject.views import weather
+from django.urls import path
+from djangoProject.spotify.spotify_auth import spotify_auth
+from djangoProject.spotify.spotify_view import spotify_callback, spotify_playlist
+from djangoProject.views import clear_session_view
 
 
 
@@ -34,6 +38,11 @@ urlpatterns = [
     path('traffic', traffic, name='traffic'),
     path('weather', weather, name='weather'),
     path('traffic', traffic, name='traffic'),
+    path('spotify_auth/', spotify_auth, name='spotify_auth'),
+    path('spotify_callback/', spotify_callback, name='spotify_callback'),
+    path('spotify/', spotify_playlist, name='spotify'),
+    path('clear_session/', clear_session_view, name='clear_session'),
+
 
 
 

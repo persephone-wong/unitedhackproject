@@ -1,8 +1,18 @@
-from django.shortcuts import render
+
 from django.http import JsonResponse
 from django.shortcuts import redirect
 import requests
 from datetime import datetime
+from django.shortcuts import render
+from spotipy import Spotify
+from spotipy.oauth2 import SpotifyOAuth
+from django.conf import settings
+
+
+def get_spotify_playlists(token_info):
+    sp = Spotify(auth=token_info['access_token'])
+    playlists = sp.current_user_playlists()
+    return playlists['items']
 
 
 def home(request):
@@ -73,11 +83,11 @@ def home(request):
         return render(request, 'home.html')
     latitude = request.GET.get('latitude')
     longitude = request.GET.get('longitude')
-    print(latitude, longitude)
+
     url = f'https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current_weather=true'
     response = requests.get(url)
     weather_data = response.json()
-    print(weather_data)
+
 
     if response.status_code == 200:
         weather_data = response.json()
@@ -116,6 +126,8 @@ def home(request):
     if weather_code in [99, 65, 67]:
         rain_delay = 15
 
+
+
     context = {
         'greetings': 'Welcome!',
         # 'time': weather_data['current_weather']['time'],
@@ -129,7 +141,13 @@ def home(request):
         'snow_delay': snow_delay,
         'rain_delay': rain_delay,
         'work_estimate': '2 hours',
-        'playlist': 'Top Hits'
     }
 
+    token_info = request.session.get('token_info')
+    if not token_info:
+        context['needs_spotify_sign_in'] = True
+    else:
+        playlists = get_spotify_playlists(token_info)
+        context['playlists'] = playlists
+    print(context)
     return render(request, 'home.html', context)
