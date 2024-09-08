@@ -86,14 +86,17 @@ def home(request):
     weather_code = current_weather.get('weathercode', None)
 
     # display message if snow or freezing rain in forecast
-    snow_delay = None
     snow_message = None
+    # display the delay as % 
+    # TODO: express it as percent of calculated trip time
     rain_delay = None
-    if weather_code in [ 73, 75, 86]:
+    snow_delay = None
+
+    if weather_code in [73, 75, 86]:
         snow_message = "Better have winter tires!"
-    if weather_code not in [56, 57, 66, 67, 71, 73, 75, 85, 86]:
+    if weather_code  in [67, 71,73, 75, 86]:
         snow_delay = 50
-    if weather_code not in [99, 65, 67]:
+    if weather_code  in [99, 65, 67]:
         rain_delay = 15
 
 
