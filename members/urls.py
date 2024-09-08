@@ -1,7 +1,7 @@
 """
 URL configuration for djangoProject project.
 
-The `urlpatterns` list routes URLs to views. For more information please see:
+The `erns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
 Examples:
 Function views
@@ -22,6 +22,7 @@ from djangoProject.views import settings
 from djangoProject.views import road_work
 from djangoProject.views import traffic
 from djangoProject.views import weather
+from djangoProject.views import add_trip
 from django.urls import path
 from djangoProject.spotify.spotify_auth import spotify_auth
 from djangoProject.spotify.spotify_view import spotify_callback, spotify_playlist
@@ -42,6 +43,7 @@ urlpatterns = [
     path('spotify_callback/', spotify_callback, name='spotify_callback'),
     path('spotify/', spotify_playlist, name='spotify'),
     path('clear_session/', clear_session_view, name='clear_session'),
+    path('add-trip/', add_trip, name='add_trip'),
 
 
 

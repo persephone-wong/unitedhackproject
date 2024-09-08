@@ -29,3 +29,6 @@ def road_work(request):
 
 def accidents(request):
     return render(request, 'accidents.html')
+
+def add_trip(request):
+    return render(request, 'add_trip.html')
