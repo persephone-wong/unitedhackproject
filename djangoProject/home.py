@@ -14,6 +14,15 @@ def get_spotify_playlists(token_info):
     playlists = sp.current_user_playlists()
     return playlists['items']
 
+def get_greetings():
+    now = datetime.now()
+    hour = now.hour
+    if hour < 12:
+        return "Good Morning!"
+    elif hour < 18:
+        return "Good Afternoon!"
+    else:
+        return "Good Evening!"
 
 def home(request):
 
@@ -112,6 +121,8 @@ def home(request):
         print("not working")
 
 
+
+
     # Format the time
     raw_time = current_weather.get('time')
     if raw_time:
@@ -144,7 +155,7 @@ def home(request):
 
 
     context = {
-        'greetings': 'Welcome!',
+        'greetings': get_greetings(),
         # 'time': weather_data['current_weather']['time'],
         'time': formatted_time,
         'date': '2023-10-01',
