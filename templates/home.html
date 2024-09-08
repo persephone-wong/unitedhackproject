@@ -19,6 +19,13 @@
       transition: transform 0.3s, box-shadow 0.3s;
     }
 
+    .trip-section {
+      background-image: url("{% static 'images/' %}{{ driving_gif }}");
+        background-size: cover;
+        background-position: center;
+
+    }
+
     .card-hover {
       transition: transform 0.3s, box-shadow 0.3s;
     }
@@ -27,10 +34,13 @@
       transform: scale(1.05);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
+    .spotify {
+        background-image: url("{% static 'images/' %}spotify.gif");
+    }
   </style>
 </head>
 
-<body class="container mt-5 text-center">
+<body class="container mt-4 text-center">
   <h1 class="display-4 mb-4" style="font-size: 45px">{{ greetings }}</h1>
 
   <!-- weather sect -->
@@ -38,8 +48,9 @@
     <div class="card-body">
       <h1 class="display-1" style="font-size: 50px">{{ emoji }}</h1>
       <h5 class="card-title">{{ location }}</h5>
-      <h1 class="card-text display-1">{{ temperature }}°C</h1>
-      <p class="card-text">{{ weather }}</p>
+      <h2 class="card-title">{{ temperature }}°C</h2>
+
+      <h1 class="card-text display-1">{{ time }}</h1>
       {% if snow_message %}
       <div class="alert alert-danger" role="alert">
         {{ snow_message }}
@@ -54,25 +65,20 @@
     </div>
   </div>
 
-  <!-- time/date sect -->
-  <div class="card mx-auto mb-4 card-hover" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title">{{ date }}</h5>
-      <h2 class="card-text">{{ time }}</h2>
-    </div>
-  </div>
+  <!-- Total Section -->
 
-  <!-- roadwork sect -->
-  <div class="card mx-auto mb-4 card-hover" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title">Road Work Sites Nearby: {{ road_work }}</h5>
-      <p class="card-text">EST Traffic: {{ work_estimate }}</p>
-    </div>
+<div class="card mx-auto text-white trip-section card-hover mb-4" style="width: 18rem">
+  <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
+      <h2 class="card-title">Trip</h2>
+      <h1 class="card-title">15 mins</h1>
+      <h6 class="card-title">Road Work Nearby: {{ road_work }}</h6>
   </div>
+</div>
+
 
   <!-- spotify -->
-  <div class="card mx-auto mb-4 card-hover" style="width: 18rem; background-color: #1DB954; color: white;">
-    <div class="card-body">
+  <div class="spotify card mx-auto mb-4 card-hover" style="width: 18rem; background-color: #1DB954; color: white;">
+    <div class="card-body text-success">
       {% if needs_spotify_sign_in %}
       <h2>Sign in to Spotify</h2>
       <a href="{% url 'spotify' %}" class="btn btn-dark">Sign in with Spotify</a>
