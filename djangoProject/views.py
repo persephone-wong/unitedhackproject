@@ -88,25 +88,23 @@ def home(request):
     weather_code = current_weather.get('weathercode', None)
 
 
-   # Format the time
+   # Format the time for readability
     raw_time = current_weather.get('time')
     if raw_time:
         try:
-            # Try parsing the time with 'Z' format
+            # Try Z format
             time_obj = datetime.strptime(raw_time, '%Y-%m-%dT%H:%M:%SZ')
         except ValueError:
-            # If that fails, try parsing without 'Z'
+            # If that fails try without Z
             time_obj = datetime.strptime(raw_time, '%Y-%m-%dT%H:%M')
-        
-        # Reformat the time into a more readable format
         formatted_time = time_obj.strftime('%B %d, %Y, %I:%M %p')
     else:
         formatted_time = 'N/A'
 
 
-    # display message if snow or freezing rain in forecast
+    # Display message if snow or freezing rain in forecast
     snow_message = None
-    # display the delay as % 
+    # Display the delay as % 
     # TODO: express it as percent of calculated trip time
     rain_delay = None
     snow_delay = None
