@@ -11,6 +11,7 @@ from djangoProject.home import home
 
 load_dotenv()
 
+
 def get_coordinates(address):
     api_key = 'tvQlJ37eaxHpLkH08u4vfNbWUKKeZD6Gct9-luWTG8c'
     geocode_url = f'https://geocode.search.hereapi.com/v1/geocode?q={address}&apiKey={api_key}'
@@ -19,13 +20,24 @@ def get_coordinates(address):
     if response.status_code != 200:
         print(f"Error fetching coordinates: {response.status_code}, {response.text}")
         return None
-    
+
     data = response.json()
     location = data.get('items', [{}])[0].get('position', {})
     return location
+
+
 def fetch_weather(lat, lon):
     url = f'https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true&timezone=auto'
     response = requests.get(url)
+    return response.json() if response.status_code == 200 else None
+
+
+def fetch_road_work(lat, lon):
+    road_work_url = (f'https://opendata.vancouver.ca/api/explore/v2.1/catalog/datasets/'
+                     f'road-ahead-upcoming-projects/records?'
+                     f'where=within_distance(geo_point_2d,GEOM%27POINT({lon}%20{lat})%27,1km)'
+                     f'&limit=20')
+    response = requests.get(road_work_url)
     return response.json() if response.status_code == 200 else None
 
 
@@ -33,7 +45,7 @@ def add_trip(request):
     here_api_key = 'tvQlJ37eaxHpLkH08u4vfNbWUKKeZD6Gct9-luWTG8c'
     home_address = '5559 Staghorn Place, Vancouver, BC'
     school_address = 'BCIT Downtown Campus, Vancouver, BC'
-    
+
     home_coords = get_coordinates(home_address)
     school_coords = get_coordinates(school_address)
 
@@ -57,9 +69,10 @@ def add_trip(request):
                  f'return=summary')
 
     response = requests.get(route_url)
-    
-    print(f"API Response Status Code: {response.status_code}")
-    print(f"API Response: {response.text}")
+
+    # # print(f"API Response Status Code: {response.status_code}")
+    # # print(f"API Response: {response.text}")
+    # print("some coords",home_lat, home_lon, school_lat, school_lon)
 
     if response.status_code == 200:
         data = response.json()
@@ -76,6 +89,8 @@ def add_trip(request):
 
     weather_data = fetch_weather(home_lat, home_lon)
     weather_code = weather_data.get('current_weather', {}).get('weathercode', None)
+    road_work_data = fetch_road_work(home_lat, home_lon)
+    road_work_count = len(road_work_data.get('results', []))
 
     snow_delay = 0
     rain_delay = 0
@@ -84,15 +99,16 @@ def add_trip(request):
     if weather_code in [99, 65, 67]:
         rain_delay = driving_time_minutes * 0.15
 
-    total_delay = driving_time_minutes + snow_delay + rain_delay
+    print("weather", weather_code)
+    road_work_delay = road_work_count * 5
+    total_delay = driving_time_minutes + snow_delay + rain_delay + road_work_delay
 
     context = {
         'home_address': home_address,
         'school_address': school_address,
         'driving_time': driving_time_minutes,
-        'total_drive_time': total_delay
+        'total_drive_time': total_delay,
+        'road_work_count': road_work_count
     }
 
-    
     return render(request, 'add_trip.html', context)
-
