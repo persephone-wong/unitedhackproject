@@ -23,6 +23,11 @@ def get_coordinates(address):
     data = response.json()
     location = data.get('items', [{}])[0].get('position', {})
     return location
+def fetch_weather(lat, lon):
+    url = f'https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true&timezone=auto'
+    response = requests.get(url)
+    return response.json() if response.status_code == 200 else None
+
 
 def add_trip(request):
     here_api_key = 'tvQlJ37eaxHpLkH08u4vfNbWUKKeZD6Gct9-luWTG8c'
@@ -69,11 +74,25 @@ def add_trip(request):
         print(f"Error fetching driving time: {response.status_code}, {response.text}")
         driving_time_minutes = 0
 
+    weather_data = fetch_weather(home_lat, home_lon)
+    weather_code = weather_data.get('current_weather', {}).get('weathercode', None)
+
+    snow_delay = 0
+    rain_delay = 0
+    if weather_code in [73, 75, 86]:
+        snow_delay = driving_time_minutes * 0.50
+    if weather_code in [99, 65, 67]:
+        rain_delay = driving_time_minutes * 0.15
+
+    total_delay = driving_time_minutes + snow_delay + rain_delay
+
     context = {
         'home_address': home_address,
         'school_address': school_address,
-        'driving_time': driving_time_minutes
+        'driving_time': driving_time_minutes,
+        'total_estimated_time': total_delay
     }
+
     
     return render(request, 'add_trip.html', context)
 
