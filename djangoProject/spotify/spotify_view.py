@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
+import os
 
 def spotify_callback(request):
-    sp_oauth = SpotifyOAuth(client_id='',
-                            client_secret='',
+    sp_oauth = SpotifyOAuth(   client_id = os.getenv('SPOTIFY_CLIENT_ID'),
+                            client_secret = os.getenv('SPOTIFY_CLIENT_SECRET'),
                             redirect_uri='http://localhost:8000/',)
     code = request.GET.get('code')
     token_info = sp_oauth.get_access_token(code)
