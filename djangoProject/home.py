@@ -25,6 +25,25 @@ def get_greetings():
     else:
         return "Good Evening!"
 
+
+def get_weather_category(weather_code):
+    if weather_code in [0, 1]:
+        return 'sunny'
+    elif weather_code in [2, 3]:
+        return 'cloudy'
+    elif weather_code in [45, 48]:
+        return 'foggy'
+    elif weather_code in [51, 53, 55, 61, 63, 65, 80, 81, 82]:
+        return 'rainy'
+    elif weather_code in [56, 57, 66, 67]:
+        return 'freezing_rain'
+    elif weather_code in [71, 73, 75, 85, 86]:
+        return 'snowy'
+    elif weather_code in [95, 96, 99]:
+        return 'thunderstorm'
+    else:
+        return 'default'
+
 def home(request):
 
     WEATHER_CODE_MAP = {
@@ -152,6 +171,7 @@ def home(request):
 
     print(weather_data)
     location = weather_data.get('timezone', 'Unknown').split('/')[-1]
+    weather_category = get_weather_category(weather_code)
 
     context = {
         'greetings': get_greetings(),
@@ -166,7 +186,9 @@ def home(request):
         'snow_delay': snow_delay,
         'rain_delay': rain_delay,
         'work_estimate': '2 hours',
-        'road_work': road_work_count
+        'road_work': road_work_count,
+        'weather_category': weather_category,
+        'background_gif': f"{weather_category}.gif"
     }
 
     token_info = request.session.get('token_info')
