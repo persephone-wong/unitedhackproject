@@ -18,7 +18,17 @@ def get_spotify_playlists(token_info):
     playlists = sp.current_user_playlists()
     return playlists['items']
 
-
+def get_greetings():
+    now = datetime.now()
+    hour = now.hour
+    if 6 < hour < 12:
+        return "Good Morning!"
+    elif 12 < hour < 18:
+        return "Good Afternoon!"
+    elif 18 < hour < 21:
+        return "Good Evening!"
+    else:
+        return "Good Night!"
 
 def get_weather_category(weather_code):
     if weather_code in [0, 1]:
