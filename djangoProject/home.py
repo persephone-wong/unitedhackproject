@@ -1,4 +1,4 @@
-
+import pytz
 from django.http import JsonResponse
 from django.shortcuts import redirect
 import requests
@@ -7,6 +7,7 @@ from django.shortcuts import render
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
 from django.conf import settings
+import pytz
 
 
 def get_spotify_playlists(token_info):
@@ -93,7 +94,7 @@ def home(request):
     latitude = request.GET.get('latitude')
     longitude = request.GET.get('longitude')
 
-    url = f'https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current_weather=true'
+    url = f'https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current_weather=true&timezone=auto'
     response = requests.get(url)
     weather_data = response.json()
 
@@ -124,19 +125,15 @@ def home(request):
 
 
     # Format the time
-    raw_time = current_weather.get('time')
+    timezone = pytz.timezone(weather_data.get('timezone'))
+    raw_time = datetime.now(timezone)
+    print(raw_time)
     if raw_time:
-        try:
-            # Try parsing the time with 'Z' format
-            time_obj = datetime.strptime(raw_time, '%Y-%m-%dT%H:%M:%SZ')
-        except ValueError:
-            # If that fails, try parsing without 'Z'
-            time_obj = datetime.strptime(raw_time, '%Y-%m-%dT%H:%M')
-
-        # Reformat the time into a more readable format
-        formatted_time = time_obj.strftime('%B %d, %Y, %I:%M %p')
+        formatted_date = raw_time.strftime('%A, %B %d, %Y')
+        formatted_time = raw_time.strftime('%I:%M %p')
     else:
         formatted_time = 'N/A'
+        formatted_date = 'N/A'
 
     # display message if snow or freezing rain in forecast
     snow_message = None
@@ -153,13 +150,15 @@ def home(request):
         rain_delay = 15
 
 
+    print(weather_data)
+    location = weather_data.get('timezone', 'Unknown').split('/')[-1]
 
     context = {
         'greetings': get_greetings(),
         # 'time': weather_data['current_weather']['time'],
         'time': formatted_time,
-        'date': '2023-10-01',
-        'location': weather_data['timezone'] if weather_data else 'Unknown',
+        'date': formatted_date,
+        'location': location,
         'weather': WEATHER_CODE_MAP.get(weather_data['current_weather']['weathercode']) if weather_data else 'N/A',
         'temperature': weather_data['current_weather']['temperature'] if weather_data else 'N/A',
         'emoji': WEATHER_EMOJI_MAP.get(current_weather.get('weathercode', '🌡️')),
@@ -176,5 +175,5 @@ def home(request):
     else:
         playlists = get_spotify_playlists(token_info)
         context['playlists'] = playlists
-    print(context)
+
     return render(request, 'home.html', context)
