@@ -1,17 +1,23 @@
 
-<body>
- <h2>{{ weather }}</h2>
 
+
+     <div class="card mx-auto" style= "width: 18rem; "  >
+      <div class="card-body">
+        <h5 class="card-title">{{ weather }} <h1 style="font-size: 50px;">{{ emoji }}</h1></h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary"></h6><h6>{{ temperature }}°C</h6>
         {% if snow_message %}
-        <h2 class="text-white bg-danger p-2">{{ snow_message }}</h2>
+        <p class="text-white bg-danger p-2">{{ snow_message }}</p>
         {% endif %}
 
         {% if snow_delay %}
-        <h2 class="text-info">+%{{ snow_delay }} due to snow</h2>
+        <p class="text-info">+%{{ snow_delay }} due to snow</p>
         {% endif %}
 
         {% if rain_delay %}
-        <h2 class="text-primary">+%{{ rain_delay }} due to heavy rain</h2>
+        <p class="text-primary">+%{{ rain_delay }} due to heavy rain</p>
         {% endif %}
+      </div>
+    </div>
 
-</body>
+
+
