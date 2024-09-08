@@ -129,20 +129,19 @@ def home(request):
 
     weather_code = current_weather.get('weathercode', None)
 
-    road_work_url = (f'https://opendata.vancouver.ca/api/explore/v2.1/catalog/datasets/'
-                     f'road-ahead-upcoming-projects/records?'
-                     f'where=within_distance(geo_point_2d,GEOM%27POINT({longitude}%20{latitude})%27,1km)'
+    road_work_url = (f'https://opendata.vancouver.ca/api/explore/v2.1/catalog/datasets/road-ahead-upcoming-projects/'
+                     f'records?where=within_distance(geo_point_2d%2C%20geom%27POINT({longitude}%20{latitude})%27%2C%201km)'
+                     f'%20or%20within_distance(geo_point_2d%2C%20geom%27POINT(-123.05498%2049.2513)%27%2C%201km)'
                      f'&limit=20')
-
     road_work_response = requests.get(road_work_url)
     road_work_count = 0
-
     if road_work_response.status_code == 200:
         road_work = road_work_response.json()
         results = road_work.get('results', [])
         road_work_count = len(results)
     else:
         print("not working")
+
 
     # Format the time
     timezone = pytz.timezone(weather_data.get('timezone'))
