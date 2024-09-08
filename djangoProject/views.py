@@ -4,6 +4,8 @@ from django.shortcuts import redirect
 import requests
 from datetime import datetime
 from djangoProject.home import home
+from datetime import datetime
+from djangoProject.functions import add_trip, get_coordinates
 
 
 
@@ -29,5 +31,5 @@ def road_work(request):
 def accidents(request):
     return render(request, 'accidents.html')
 
-def add_trip(request):
-    return render(request, 'add_trip.html')
+# def add_trip(request):
+#     return render(request, 'add_trip.html')
