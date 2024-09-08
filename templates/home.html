@@ -44,7 +44,15 @@
 
         <h2>{{ temperature }}°C</h2>
         <h2>{{ work_estimate }}</h2>
-        <h2>{{ playlist }}</h2>
+
+       <h1>Your Playlists</h1>
+
+         {% if needs_spotify_sign_in %}
+                <h2>Sign in to Spotify</h2>
+                <a href="{% url 'spotify' %}">Sign in with Spotify</a>
+        {% else %}
+        {% include 'spotify.html' %}
+        {% endif %}
       </div>
     </div>
   </div>
