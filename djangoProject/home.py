@@ -18,8 +18,9 @@ def get_spotify_playlists(token_info):
     playlists = sp.current_user_playlists()
     return playlists['items']
 
-def get_greetings():
-    now = datetime.now()
+def get_greetings(timezone):
+    pytzTimezone = pytz.timezone(timezone)
+    now = datetime.now(pytzTimezone)
     hour = now.hour
     if 4 < hour < 12:
         return "Good Morning!"
@@ -189,7 +190,7 @@ def home(request):
 
 
     context = {
-        'greetings': get_greetings(),
+        'greetings': get_greetings(weather_data.get('timezone')),
         # 'time': weather_data['current_weather']['time'],
         'time': formatted_time,
         'date': formatted_date,
