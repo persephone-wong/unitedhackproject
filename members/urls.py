@@ -23,7 +23,6 @@ from djangoProject.views import road_work
 from djangoProject.views import traffic
 from djangoProject.views import weather
 from djangoProject.views import add_trip
-from django.urls import path
 from djangoProject.spotify.spotify_auth import spotify_auth
 from djangoProject.spotify.spotify_view import spotify_callback, spotify_playlist
 from djangoProject.views import clear_session_view
