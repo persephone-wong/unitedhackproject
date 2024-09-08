@@ -3,114 +3,118 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home Page</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <style>
-    .weather-section {
-      background-image: url("{% static 'images/' %}{{ background_gif }}");
-      background-size: cover;
-      background-position: center;
-      padding: 20px;
-      border-radius: 8px;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .body {
-        background-image: url("{% static 'images/' %}{{ body_gif }}");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        height: 100vh; /* Full viewport height */
-        width: 100vw;  /* Full viewport width */
-        margin: 0;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+    <style>
+        .weather-section {
+            background-image: url("{% static 'images/' %}{{ background_gif }}");
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .body {
+            background-image: url("{% static 'images/' %}{{ body_gif }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh; /* Full viewport height */
+            width: 100vw; /* Full viewport width */
+            margin: 0;
 
 
+        }
 
-    }
+        .trip-section {
+            background-image: url("{% static 'images/' %}{{ driving_gif }}");
+            background-size: cover;
+            background-position: center;
 
-    .trip-section {
-      background-image: url("{% static 'images/' %}{{ driving_gif }}");
-        background-size: cover;
-        background-position: center;
+        }
 
-    }
+        .card-hover {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
 
-    .card-hover {
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
+        .card-hover:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
 
-    .card-hover:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    }
-    .spotify {
-        background-image: url("{% static 'images/' %}spotify.gif");
-    }
-  </style>
+        .spotify {
+            background-image: url("{% static 'images/' %}spotify.gif");
+        }
+    </style>
 </head>
 
 <body class="body container mt-4 text-center">
-  <h1 class="text-white display-4 mb-4" style="font-size: 45px">{{ greetings }}</h1>
+<h1 class="text-white display-4 mb-4" style="font-size: 45px">{{ greetings }}</h1>
 
-  <!-- weather sect -->
-  <div class="card mx-auto mb-4 weather-section card-hover" style="width: 18rem;">
+<!-- weather sect -->
+<div class="card mx-auto mb-4 weather-section card-hover" style="width: 18rem;">
     <div class="card-body">
-      <h1 class="display-1" style="font-size: 50px">{{ emoji }}</h1>
-      <h5 class="card-title">{{ location }}</h5>
-      <h2 class="card-title">{{ temperature }}°C</h2>
+        <h1 class="display-1" style="font-size: 50px">{{ emoji }}</h1>
+        <h5 class="card-title">{{ location }}</h5>
+        <h2 class="card-title">{{ temperature }}°C</h2>
 
-      <h1 class="card-text display-1">{{ time }}</h1>
-      {% if snow_message %}
-      <div class="alert alert-danger" role="alert">
-        {{ snow_message }}
-      </div>
-      {% endif %}
-      {% if snow_delay %}
-      <p class="text-info">+%{{ snow_delay }} due to snow</p>
-      {% endif %}
-      {% if rain_delay %}
-      <p class="text-primary">+%{{ rain_delay }} due to heavy rain</p>
-      {% endif %}
+        <h1 class="card-text display-1">{{ time }}</h1>
+        {% if snow_message %}
+            <div class="alert alert-danger" role="alert">
+                {{ snow_message }}
+            </div>
+        {% endif %}
+        {% if snow_delay %}
+            <p class="text-info">+%{{ snow_delay }} due to snow</p>
+        {% endif %}
+        {% if rain_delay %}
+            <p class="text-primary">+%{{ rain_delay }} due to heavy rain</p>
+        {% endif %}
     </div>
-  </div>
+</div>
 
-  <!-- Total Section -->
+<!-- Total Section -->
 
 <div class="card mx-auto text-white trip-section card-hover mb-4" style="width: 18rem">
-  <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
-      <h2 class="card-title">Next Trip</h2>
-      <h1 class="card-title">{{ total_delay }} minutes</h1>
-      <h6 class="card-title">Road Work Nearby: {{ road_work }}</h6>
-  </div>
+    <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
+        <h2 class="card-title">Next Trip</h2>
+        <h1 class="card-title">{{ total_delay }} minutes</h1>
+        <h6 class="card-title">Road Work Nearby: {{ road_work }}</h6>
+    </div>
 </div>
 
 
-  <!-- spotify -->
-  <div class="spotify card mx-auto mb-4 card-hover" style="width: 18rem; background-color: #1DB954; color: white;">
+<!-- spotify -->
+<div class="spotify card mx-auto mb-4 card-hover" style="width: 18rem; background-color: #1DB954; color: white;">
     <div class="card-body text-success">
-      {% if needs_spotify_sign_in %}
-      <h1>Spotify</h1>
-      <a href="{% url 'spotify' %}" class="btn btn-dark">Sign in with Spotify</a>
-      {% else %}
-      {% include 'spotify.html' %}
-      {% endif %}
+        {% if needs_spotify_sign_in %}
+            <h1>Spotify</h1>
+            <a href="{% url 'spotify' %}" class="btn btn-dark">Sign in with Spotify</a>
+        {% else %}
+            {% include 'spotify.html' %}
+        {% endif %}
     </div>
-  </div>
-  <br>
+</div>
+<br>
 
-  <a href="{% url 'add_trip' %}" class="btn btn-dark">Add trip</a>
+<a href="{% url 'add_trip' %}" class="btn btn-dark">Add trip</a>
 
-  <footer class="footer text-white mt-4">
+<footer class="footer text-white mt-4">
     <div>
-      <p>&copy; 2024 - All rights reserved</p>
+        <p>&copy; 2024 - All rights reserved</p>
     </div>
-  </footer>
+</footer>
 
 
-  <script src="{% static 'js/getlocation.js' %}"></script>
+<script src="{% static 'js/getlocation.js' %}"></script>
 </body>
 
 </html>
