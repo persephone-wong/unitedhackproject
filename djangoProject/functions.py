@@ -108,7 +108,8 @@ def add_trip(request):
         'school_address': school_address,
         'driving_time': driving_time_minutes,
         'total_drive_time': total_delay,
-        'road_work_count': road_work_count
+        'road_work_count': road_work_count,
+        'body_gif': f"{'morning'}big.gif"
     }
 
     return render(request, 'add_trip.html', context)
