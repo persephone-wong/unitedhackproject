@@ -1,9 +1,5 @@
-from django.shortcuts import render
-from django.http import JsonResponse
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 import requests
-from datetime import datetime
-from djangoProject.home import home
 import os
 from dotenv import load_dotenv
 import math
@@ -11,7 +7,6 @@ import math
 load_dotenv()
 
 def get_coordinates(address):
-    # had issues getting key from .env 
     api_key = 'tvQlJ37eaxHpLkH08u4vfNbWUKKeZD6Gct9-luWTG8c'
     geocode_url = f'https://geocode.search.hereapi.com/v1/geocode?q={address}&apiKey={api_key}'
     response = requests.get(geocode_url)
@@ -23,8 +18,6 @@ def get_coordinates(address):
     data = response.json()
     location = data.get('items', [{}])[0].get('position', {})
     return location
-
-
 
 def add_trip(request):
     here_api_key = 'tvQlJ37eaxHpLkH08u4vfNbWUKKeZD6Gct9-luWTG8c'
@@ -45,7 +38,7 @@ def add_trip(request):
     if not (home_lat and home_lon and school_lat and school_lon):
         return render(request, 'add_trip.html', {'error': 'Invalid coordinates received'})
 
-    # HERE Routing URL for car only
+    # HERE Routing API URL for car transport
     route_url = (f'https://router.hereapi.com/v8/routes?'
                  f'apiKey={here_api_key}&'
                  f'transportMode=car&'
@@ -61,9 +54,8 @@ def add_trip(request):
     if response.status_code == 200:
         data = response.json()
         try:
-            # Get duration in seconds
+            # Extract the duration in seconds
             driving_time = data.get('routes', [{}])[0].get('sections', [{}])[0].get('summary', {}).get('duration', 0)
-            # convert to minutes and round up to int
             driving_time_minutes = math.ceil(driving_time / 60)
         except (IndexError, KeyError, TypeError) as e:
             print(f"Error parsing driving time: {e}")
@@ -81,31 +73,24 @@ def add_trip(request):
     return render(request, 'add_trip.html', context)
 
 
-
-
-
 def settings(request):
     return render(request, 'settings.html')
 
 def clear_session_view(request):
     request.session.flush()
-    return redirect('/')  # Redirect to the home page or any other page
-
+    return redirect('/') 
 
 def traffic(request):
     return render(request, 'traffic.html')
 
-
-def weather(request):
+def weather(request, *args, **kwargs):
     return render(request, 'weather.html')
 
-
-def road_work(request):
+def road_work(request, *args, **kwargs):
     return render(request, 'road_work.html')
 
-
-def accidents(request):
+def accidents(request, *args, **kwargs):
     return render(request, 'accidents.html')
 
-def add_trip(request):
-    return render(request, 'add_trip.html')
+def home(request, *args, **kwargs):
+    return render(request, 'home.html')
