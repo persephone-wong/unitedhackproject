@@ -22,7 +22,7 @@
         background-image: url("{% static 'images/' %}{{ body_gif }}");
         background-size: cover;
         background-position: center;
-        
+
 
         
         
@@ -79,7 +79,7 @@
 <div class="card mx-auto text-white trip-section card-hover mb-4" style="width: 18rem">
   <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
       <h2 class="card-title">Next Trip</h2>
-      <h1 class="card-title">15 mins</h1>
+      <h1 class="card-title">{{ total_delay }} minutes</h1>
       <h6 class="card-title">Road Work Nearby: {{ road_work }}</h6>
   </div>
 </div>

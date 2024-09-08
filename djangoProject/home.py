@@ -164,19 +164,23 @@ def home(request):
     else:
         time_of_day = "night"
 
+    driving_time = 18
     # display message if snow or freezing rain in forecast
     snow_message = None
     # display the delay as %
     # TODO: express it as percent of calculated trip time
-    rain_delay = None
-    snow_delay = None
+    rain_delay = 0
+    snow_delay = 0
 
     if weather_code in [73, 75, 86]:
         snow_message = "Better have winter tires!"
     if weather_code in [67, 71, 73, 75, 86]:
-        snow_delay = 50
+        snow_delay = .50
     if weather_code in [99, 65, 67]:
-        rain_delay = 15
+        rain_delay = .15
+
+    road_work_delay = road_work_count * 5
+    total_delay = road_work_delay + snow_delay + rain_delay + driving_time
 
 
     print(weather_data)
@@ -202,7 +206,9 @@ def home(request):
         'weather_category': weather_category,
         'background_gif': f"{weather_category}.gif",
         'driving_gif': f"{time_of_day}.gif",
-        'body_gif': f"{time_of_day}big.gif"
+        'body_gif': f"{time_of_day}big.gif",
+        'total_delay': total_delay,
+        'total_delay': total_delay,
 
     }
 
