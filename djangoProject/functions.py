@@ -90,7 +90,7 @@ def add_trip(request):
         'home_address': home_address,
         'school_address': school_address,
         'driving_time': driving_time_minutes,
-        'total_estimated_time': total_delay
+        'total_drive_time': total_delay
     }
 
     

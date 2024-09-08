@@ -13,18 +13,24 @@
 <body class="container mt-5">
   <div class="text-center">
     <div class="row mt-4">
-      <div class="col">
-        <h2>Add Trip</h2>
-        <p><strong>Home Address:</strong> {{ home_address }}</p>
-        <p><strong>School Address:</strong> {{ school_address }}</p>
-        <p><strong>Driving Time:</strong> {{ driving_time }} minutes</p>
-        {% if error %}
-        <p class="text-danger">{{ error }}</p>
-        {% endif %}
+      <div class="col-12 col-md-8 mx-auto">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h2 class="card-title mb-4">Add Trip</h2>
+            <p><strong>Home Address:</strong> {{ home_address }}</p>
+            <p><strong>School Address:</strong> {{ school_address }}</p>
+            <p><strong>Expected Driving Time:</strong> {{ driving_time }} minutes</p>
+            <p><strong>Actual Driving Time:</strong> {{ total_drive_time }} minutes</p>
+            {% if error %}
+            <div class="alert alert-danger mt-3" role="alert">
+              {{ error }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
 </body>
 
 </html>
