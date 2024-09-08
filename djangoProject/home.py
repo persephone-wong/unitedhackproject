@@ -88,7 +88,6 @@ def home(request):
     response = requests.get(url)
     weather_data = response.json()
 
-
     if response.status_code == 200:
         weather_data = response.json()
         current_weather = weather_data.get('current_weather', {})
@@ -96,6 +95,22 @@ def home(request):
         current_weather = {}
 
     weather_code = current_weather.get('weathercode', None)
+
+    road_work_url = (f'https://opendata.vancouver.ca/api/explore/v2.1/catalog/datasets/'
+                     f'road-ahead-upcoming-projects/records?'
+                     f'where=within_distance(geo_point_2d,GEOM%27POINT({longitude}%20{latitude})%27,1km)'
+                     f'&limit=20')
+
+    road_work_response = requests.get(road_work_url)
+    road_work_count = 0
+
+    if road_work_response.status_code == 200:
+        road_work = road_work_response.json()
+        results = road_work.get('results', [])
+        road_work_count = len(results)
+    else:
+        print("not working")
+
 
     # Format the time
     raw_time = current_weather.get('time')
@@ -141,6 +156,7 @@ def home(request):
         'snow_delay': snow_delay,
         'rain_delay': rain_delay,
         'work_estimate': '2 hours',
+        'road_work': road_work_count
     }
 
     token_info = request.session.get('token_info')
