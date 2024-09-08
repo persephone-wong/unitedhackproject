@@ -36,7 +36,7 @@ def get_weather_category(weather_code):
     elif weather_code in [51, 53, 55, 61, 63, 65, 80, 81, 82]:
         return 'rainy'
     elif weather_code in [56, 57, 66, 67]:
-        return 'freezing_rain'
+        return 'rainy'
     elif weather_code in [71, 73, 75, 85, 86]:
         return 'snowy'
     elif weather_code in [95, 96, 99]:

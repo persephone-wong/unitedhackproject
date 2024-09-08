@@ -21,12 +21,12 @@
 </head>
 
 <body class="container mt-5 text-center">
-    <h1 class="display-4 mb-4">{{ greetings }}</h1>
+    <h1 class="display-4 mb-4" style="font-size: 45px">{{ greetings }}</h1>
 
     <!-- weather sect -->
     <div class="card mx-auto mb-4 weather-section" style="width: 18rem;">
         <div class="card-body">
-            <h1 class="display-1">{{ emoji }}</h1>
+            <h1 class="display-1" style="font-size: 50px">{{ emoji }}</h1>
             <h5 class="card-title">{{ location }}</h5>
             <h1 class="card-text display-1">{{ temperature }}°C</h1>
             <p class="card-text">{{ weather }}</p>
@@ -55,7 +55,7 @@
     <!-- roadwork sect -->
     <div class="card mx-auto mb-4" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title">Road Work Sites Nearby {{ road_work }}</h5>
+            <h5 class="card-title">Road Work Sites Nearby: {{ road_work }}</h5>
             <p class="card-text">EST Traffic: {{ work_estimate }}</p>
         </div>
     </div>
