@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.shortcuts import redirect
 import requests
+from datetime import datetime
+
 
 WEATHER_CODE_MAP = {
     0: 'Clear sky',
@@ -85,6 +87,23 @@ def home(request):
 
     weather_code = current_weather.get('weathercode', None)
 
+
+   # Format the time
+    raw_time = current_weather.get('time')
+    if raw_time:
+        try:
+            # Try parsing the time with 'Z' format
+            time_obj = datetime.strptime(raw_time, '%Y-%m-%dT%H:%M:%SZ')
+        except ValueError:
+            # If that fails, try parsing without 'Z'
+            time_obj = datetime.strptime(raw_time, '%Y-%m-%dT%H:%M')
+        
+        # Reformat the time into a more readable format
+        formatted_time = time_obj.strftime('%B %d, %Y, %I:%M %p')
+    else:
+        formatted_time = 'N/A'
+
+
     # display message if snow or freezing rain in forecast
     snow_message = None
     # display the delay as % 
@@ -102,7 +121,8 @@ def home(request):
 
     context = {
         'greetings': 'Welcome!',
-        'time': weather_data['current_weather']['time'],
+        # 'time': weather_data['current_weather']['time'],
+        'time': formatted_time,
         'date': '2023-10-01',
         'location': weather_data['timezone'] if weather_data else 'Unknown',
         'weather': WEATHER_CODE_MAP.get(weather_data['current_weather']['weathercode']) if weather_data else 'N/A',
