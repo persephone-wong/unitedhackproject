@@ -1,8 +1,9 @@
 
 <body>
+<div class="d-flex justify-content-center align-items-center flex-column">
     <h1>Your Playlists</h1>
     {% for playlist in playlists %}
-        <h2>{{ playlist.name }}</h2>
-        <iframe src="https://open.spotify.com/embed/playlist/{{ playlist.id }}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        <iframe src="https://open.spotify.com/embed/playlist/{{ playlist.id }}" width="270" height="180" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
     {% endfor %}
+</div>
 </body>
