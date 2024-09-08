@@ -28,25 +28,13 @@
 
 
 
-        <h2>{{ weather }}</h2>
-
-        {% if snow_message %}
-        <h2 class="text-white bg-danger p-2">{{ snow_message }}</h2>
-        {% endif %}
-
-        {% if snow_delay %}
-        <h2 class="text-info">+%{{ snow_delay }} due to snow</h2>
-        {% endif %}
-
-        {% if rain_delay %}
-        <h2 class="text-primary">+%{{ rain_delay }} due to heavy rain</h2>
-        {% endif %}
+       {% include 'weather.html' %}
 
         <h2>{{ temperature }}°C</h2>
         <h2>Road Work Sites Nearby: {{ road_work }}</h2>
         <h2>{{ work_estimate }}</h2>
 
-  
+
 
          {% if needs_spotify_sign_in %}
                 <h2>Sign in to Spotify</h2>
