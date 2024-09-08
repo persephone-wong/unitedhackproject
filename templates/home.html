@@ -40,7 +40,7 @@
   </style>
 </head>
 
-<body class="container mt-2 text-center">
+<body class="container mt-4 text-center">
   <h1 class="display-4 mb-4" style="font-size: 45px">{{ greetings }}</h1>
 
   <!-- weather sect -->
@@ -48,6 +48,8 @@
     <div class="card-body">
       <h1 class="display-1" style="font-size: 50px">{{ emoji }}</h1>
       <h5 class="card-title">{{ location }}</h5>
+      <h2 class="card-title">{{ temperature }}°C</h2>
+
       <h1 class="card-text display-1">{{ time }}</h1>
       {% if snow_message %}
       <div class="alert alert-danger" role="alert">
