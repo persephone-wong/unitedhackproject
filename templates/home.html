@@ -3,50 +3,93 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home Page</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .weather-section {
+            background-image: url("{% static 'images/' %}{{ background_gif }}");
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card-hover {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card-hover:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+    </style>
 </head>
 
-<body class="container mt-5">
-  <div class="text-center">
-    <h1 class="display-4">{{ greetings }}</h1>
+<body class="container mt-5 text-center">
+    <h1 class="display-4 mb-4" style="font-size: 45px">{{ greetings }}</h1>
 
-    <div class="row mt-4">
-      <div class="col">
-        <h2>{{ time }}</h2>
-
-        <h2>{{ date }}</h2>
-
-
-
-        <h2>{{ location }}</h2>
-
-      
-
-
-
-       {% include 'weather.html' %}
-
-        
-        <h2>Road Work Sites Nearby: {{ road_work }}</h2>
-        <h2>{{ work_estimate }}</h2>
-
-
-
-         {% if needs_spotify_sign_in %}
-                <h2>Sign in to Spotify</h2>
-                <a href="{% url 'spotify' %}">Sign in with Spotify</a>
-        {% else %}
-        {% include 'spotify.html' %}
-        {% endif %}
-      </div>
+    <!-- weather sect -->
+    <div class="card mx-auto mb-4 weather-section card-hover" style="width: 18rem;">
+        <div class="card-body">
+            <h1 class="display-1" style="font-size: 50px">{{ emoji }}</h1>
+            <h5 class="card-title">{{ location }}</h5>
+            <h1 class="card-text display-1">{{ temperature }}°C</h1>
+            <p class="card-text">{{ weather }}</p>
+            {% if snow_message %}
+            <div class="alert alert-danger" role="alert">
+                {{ snow_message }}
+            </div>
+            {% endif %}
+            {% if snow_delay %}
+            <p class="text-info">+%{{ snow_delay }} due to snow</p>
+            {% endif %}
+            {% if rain_delay %}
+            <p class="text-primary">+%{{ rain_delay }} due to heavy rain</p>
+            {% endif %}
+        </div>
     </div>
-  </div>
 
-  <script src="{% static 'js/getlocation.js' %}"></script>
+    <!-- time/date sect -->
+    <div class="card mx-auto mb-4 card-hover" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{ date }}</h5>
+            <h2 class="card-text">{{ time }}</h2>
+        </div>
+    </div>
+
+    <!-- roadwork sect -->
+    <div class="card mx-auto mb-4 card-hover" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Road Work Sites Nearby: {{ road_work }}</h5>
+            <p class="card-text">EST Traffic: {{ work_estimate }}</p>
+        </div>
+    </div>
+
+    <!-- spotify -->
+    <div class="card mx-auto mb-4 card-hover" style="width: 18rem; background-color: #1DB954; color: white;">
+        <div class="card-body">
+            {% if needs_spotify_sign_in %}
+            <h2>Sign in to Spotify</h2>
+            <a href="{% url 'spotify' %}" class="btn btn-dark">Sign in with Spotify</a>
+            {% else %}
+            {% include 'spotify.html' %}
+            {% endif %}
+        </div>
+    </div>
+    <br>
+
+     <footer class="footer ">
+         <div>
+         <p>&copy; 2024 - All rights reserved</p> </div>
+    </footer>
+
+
+    <script src="{% static 'js/getlocation.js' %}"></script>
 </body>
 
 </html>

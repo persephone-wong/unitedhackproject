@@ -85,7 +85,7 @@ def settings(request):
 
 def clear_session_view(request):
     request.session.flush()
-    return redirect('/') 
+    return redirect('/')
 
 def traffic(request):
     return render(request, 'traffic.html')
